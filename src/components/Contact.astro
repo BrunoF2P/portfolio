@@ -1,0 +1,119 @@
+---
+import enMessages from '../messages/en.js';
+import ptMessages from '../messages/pt-br.js';
+import { Icon } from 'astro-icon/components'
+
+const locale = Astro.url.pathname.startsWith("/pt-br") ? "pt-br" : "en";
+const messages = locale === 'pt-br' ? ptMessages : enMessages;
+const title = messages.contact.title;
+const description = messages.contact.description;
+---
+
+<div id="contact" class="contact-field">
+    <div class="detail-title">
+        <div class="cube"></div>
+        <h1 style="font-weight: bold;">{title}</h1>
+    </div>
+    <p class="description">{description}</p>
+        <ul class="contact-info">
+            <li>
+                <Icon name="phone" aria-hidden="true" />
+                <span>(75) 9 9825-2863</span>
+            </li>
+            <li>
+                <Icon name="github" aria-hidden="true" />
+                <a href="https://github.com/BrunoF2P" target="_blank">github.com/BrunoF2P</a>
+            </li>
+            <li>
+                <Icon name="email" aria-hidden="true" />
+                <a href="mailto:brunobispo.saints@gmail.com">brunobispo.saints@gmail.com</a>
+            </li>
+            <li>
+                <Icon name="linkedin" aria-hidden="true" />
+                <a href="https://www.linkedin.com/in/brunof2p" target="_blank">linkedin.com/in/brunof2p</a>
+            </li>
+        </ul>
+</div>
+
+<style>
+    [data-icon] {
+        font-size: 2rem;
+    }
+    .contact-field {
+        display: flex;
+        flex-direction: column;
+        margin-top: 8%;
+        align-items: center;
+        color: white;
+    }
+    .detail-title {
+        display: flex;
+        align-items: center;
+        gap: 25px; 
+    }
+    .cube {
+        width: 10px;
+        height: 10px;
+        background-color: #78d7d5;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;    
+    }
+    .cube::after {
+        content: "";
+        position: absolute;
+        inset: -5px;
+        border: 2px solid #78d7d5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .description {
+        padding: 1.5rem;
+        font-size: 1.2rem;
+        color: #bbb;
+    }
+
+    .contact-info {
+        list-style: none;
+        margin-top: 4%;
+        padding: 0;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 5rem 30rem;
+        text-align: center;
+    }
+
+
+    .contact-info li {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1.2rem;
+    }
+
+    .contact-info a {
+        color: white;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .contact-info a:hover {
+        color: #78d7d5;
+        text-decoration: underline;
+    }
+
+    @media screen and (max-width: 768px) {
+        .description {
+            font-size: 1.2rem;
+            color: #bbb;
+            text-align: center;
+        }
+        .contact-info {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+    }
+</style>

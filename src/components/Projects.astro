@@ -1,0 +1,185 @@
+---
+import {Image} from "astro:assets";
+import image from '../assets/profile.jpg';
+import enMessages from '../messages/en.js';
+import ptMessages from '../messages/pt-br.js';
+
+const locale = Astro.url.pathname.startsWith("/pt-br") ? "pt-br" : "en";
+const messages = locale === 'pt-br' ? ptMessages : enMessages;
+
+const title = messages.projects.title;
+const projects = messages.projects.projects;
+---
+
+<div id="projects" class="projects-field">
+    <div class="detail-title">
+        <div class="cube"></div>
+        <h1 style="font-weight: bold;">{title}</h1>
+    </div>
+    <ul class="projects-info">
+        {projects.map(project => (
+            <li class="box-content">
+                <div class="detail-box"> </div>
+                <div class="content-front">
+                    <Image class="image" src={project.image} alt={project.title} decoding="async" loading="lazy"/>
+                    <h3>{project.title}</h3>
+                    <p style="margin: 8px;">{project.description}</p>
+                </div>
+                <div class="content-hover">
+                    <h3>{project.title}</h3>
+                    <p style="margin: 8px;">{project.description}</p>
+                    <div class="tech-container">
+                        {project.technologies.map((tech) => (
+                            <span class="tech">{tech}</span>
+                        ))}
+                    </div>
+                    <a class="button" href={project.link} target="_blank" aria-label={`Ir para ${project.title}`}>Acessar</a>
+                </div>
+            </li>
+        ))}
+    </ul>
+</div>
+
+<style>
+    .projects-field {
+        display: flex;
+        flex-direction: column;
+        margin-top: 8%;
+        align-items: center;
+        color: white;
+    }
+    .detail-title {
+        display: flex;
+        align-items: center;
+        gap: 25px; 
+    }
+    .cube {
+        width: 10px;
+        height: 10px;
+        background-color: #78d7d5;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;    
+    }
+    .cube::after {
+        content: "";
+        position: absolute;
+        inset: -5px;
+        border: 2px solid #78d7d5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .projects-info {
+        list-style: none;
+        margin-top: 8%;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5rem;
+        justify-content: center;
+        width: 100%;
+    }
+    .box-content {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        width: 20rem;
+        height: 22rem;
+        background-color: #2b3443;
+        border-radius: 8px;
+        transition: transform 0.3s;
+    }
+    .box-content:hover {
+        transform: scale(1.05);
+    }
+
+    .detail-box {
+        width: 70%;
+        height: 12px; 
+        background-color: #72f8f2;
+        position: absolute;
+        top: -13px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+    }
+
+    .content-front, .content-hover {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        transition: opacity 0.3s;
+    }
+
+    .content-hover {
+        opacity: 0;
+    }
+    .box-content:hover .content-hover {
+        opacity: 1;
+    }
+    .box-content:hover .content-front {
+        opacity: 0;
+    }
+    .image {
+        margin-top: 8px;
+        width: 90%;
+        height: 50%;
+        object-fit: cover;
+        border-radius: 8px;
+        
+    }
+    .button {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        border: none;
+        background-color: #202733;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 8px;
+        padding: 10px 32px;
+        cursor: pointer;
+        font-weight: bold;
+        color: #78d7d5;
+    }
+
+    .button:hover {
+        background-color: #78d7d5;
+        color: white;
+    }
+    @media screen and (max-width: 768px) {
+        .projects-info {
+            gap: 2rem;
+        }
+
+    }
+    .tech{
+        background-color: transparent;
+        color: #78d7d5;
+        padding: 2px 8px;
+        border: 2px solid #78d7d5;
+        border-radius: 8px;
+        transition: background-color 0.3s, color 0.3s;
+        font-weight: bold;
+    }
+    .tech-container{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+        gap: 1rem;
+        margin-top: 1rem;
+        margin-bottom: 5rem;
+    }
+</style>
